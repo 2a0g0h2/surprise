@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A Little Surprise</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+
+            background:
+                radial-gradient(
+                    circle at 50% 42%,
+                    #e6a9ba 0%,
+                    #d38ca3 45%,
+                    #bd6f8b 72%,
+                    #9f5270 100%
+                );
+
+            color: #fff6f8;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+        }
+
+
+        /* -----------------------------
+           SCENE
+        ----------------------------- */
+
+        .scene {
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    perspective: 1400px;
+
+    overflow: hidden;
+}
+
+
+        /* -----------------------------
+           SOFT PINK LIGHT
+        ----------------------------- */
+
+        .glow {
+    position: absolute;
+
+    width: 800px;
+    height: 800px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 248, 250, 0.75) 0%,
+            rgba(255, 235, 241, 0.55) 18%,
+            rgba(255, 210, 224, 0.30) 38%,
+            rgba(245, 170, 195, 0.12) 55%,
+            transparent 72%
+        );
+
+    filter: blur(35px);
+
+    animation:
+        glowPulse 4s ease-in-out infinite;
+}
+
+
+        @keyframes glowPulse {
+
+            0%,
+            100% {
+
+                transform: scale(0.95);
+
+                opacity: 0.7;
+            }
+
+            50% {
+
+                transform: scale(1.08);
+
+                opacity: 1;
+            }
+        }
+
+
+        /* -----------------------------
+           GIFT
+        ----------------------------- */
+
+        .gift {
+
+            position: relative;
+
+            width: 280px;
+            height: 240px;
+
+            cursor: pointer;
+
+            transform-style: preserve-3d;
+
+            transition:
+                transform 0.6s ease,
+                opacity 0.8s ease;
+        }
+
+
+        .gift:hover {
+
+            transform:
+                translateY(-8px)
+                scale(1.025);
+        }
+
+
+        /* -----------------------------
+           BOX
+        ----------------------------- */
+
+        .box {
+
+            position: absolute;
+
+            left: 20px;
+            bottom: 0;
+
+            width: 240px;
+            height: 160px;
+
+            border-radius: 6px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    #b85c7a 0%,
+                    #d47796 45%,
+                    #ad4e6e 100%
+                );
+
+            box-shadow:
+
+                0 35px 65px
+                rgba(92, 35, 57, 0.35),
+
+                inset 0 1px
+                rgba(255,255,255,0.20),
+
+                inset 0 -15px 25px
+                rgba(110, 35, 59, 0.12);
+        }
+
+
+        /* subtle box highlight */
+
+        .box::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+
+                linear-gradient(
+                    120deg,
+                    rgba(255,255,255,0.16),
+                    transparent 35%
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* -----------------------------
+           VERTICAL RIBBON
+        ----------------------------- */
+
+        .ribbon-vertical {
+
+            position: absolute;
+
+            left: 112px;
+            bottom: 0;
+
+            width: 56px;
+            height: 160px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    #d994aa,
+                    #f8d4df 45%,
+                    #e7b0c1 70%,
+                    #cf829b
+                );
+
+            z-index: 5;
+
+            box-shadow:
+
+                inset 1px 0
+                rgba(255,255,255,0.30),
+
+                inset -1px 0
+                rgba(120,50,72,0.12);
+        }
+
+
+        /* -----------------------------
+           HORIZONTAL RIBBON
+        ----------------------------- */
+
+        .ribbon-horizontal {
+
+            position: absolute;
+
+            left: 20px;
+            bottom: 108px;
+
+            width: 240px;
+            height: 48px;
+
+            background:
+
+                linear-gradient(
+                    180deg,
+                    #f8d4df,
+                    #df9fb3 50%,
+                    #c9829b
+                );
+
+            z-index: 6;
+
+            box-shadow:
+
+                inset 0 1px
+                rgba(255,255,255,0.35);
+        }
+
+
+        /* -----------------------------
+           LID
+        ----------------------------- */
+
+        .lid {
+
+            position: absolute;
+
+            left: 8px;
+            top: 18px;
+
+            width: 264px;
+            height: 58px;
+
+            border-radius: 6px;
+
+            background:
+
+                linear-gradient(
+                    180deg,
+                    #ce7692,
+                    #ae4e6e
+                );
+
+            z-index: 10;
+
+            transform-origin: left bottom;
+
+            transition:
+                transform 1.15s
+                cubic-bezier(.2,.8,.2,1);
+
+            box-shadow:
+
+                0 12px 25px
+                rgba(100, 30, 53, 0.25),
+
+                inset 0 1px
+                rgba(255,255,255,0.20);
+        }
+
+
+        /* lid ribbon */
+
+        .lid-ribbon {
+
+            position: absolute;
+
+            left: 104px;
+            top: 0;
+
+            width: 56px;
+            height: 58px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    #d994aa,
+                    #f8d4df 45%,
+                    #e4aabd
+                );
+        }
+
+
+        /* -----------------------------
+           BOW
+        ----------------------------- */
+
+        .bow {
+
+            position: absolute;
+
+            left: 94px;
+            top: -35px;
+
+            width: 92px;
+            height: 65px;
+
+            z-index: 20;
+
+            transition:
+
+                transform 0.9s ease,
+
+                opacity 0.6s ease;
+        }
+
+
+        .bow-left,
+        .bow-right {
+
+            position: absolute;
+
+            width: 48px;
+            height: 54px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #f7cbd8,
+                    #d987a1
+                );
+
+            box-shadow:
+
+                inset 0 1px
+                rgba(255,255,255,0.35);
+        }
+
+
+        .bow-left {
+
+            left: -2px;
+
+            border-radius:
+                75% 25% 70% 30%;
+
+            transform:
+                rotate(-27deg);
+        }
+
+
+        .bow-right {
+
+            right: -2px;
+
+            border-radius:
+                25% 75% 30% 70%;
+
+            transform:
+                rotate(27deg);
+        }
+
+
+        .bow-center {
+
+            position: absolute;
+
+            left: 34px;
+            top: 18px;
+
+            width: 25px;
+            height: 29px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #f9d8e2,
+                    #d17f99
+                );
+
+            border-radius: 6px;
+
+            z-index: 3;
+        }
+
+
+        /* -----------------------------
+           HINT
+        ----------------------------- */
+
+        .hint {
+
+            position: absolute;
+
+            bottom: 10%;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            letter-spacing: 4px;
+
+            color:
+                rgba(255, 246, 248, 0.82);
+
+            animation:
+                breathe 2.8s ease-in-out infinite;
+
+            transition:
+                opacity 0.6s ease;
+
+            user-select: none;
+        }
+
+
+        .hint.hidden {
+
+            opacity: 0 !important;
+
+            animation: none;
+
+            pointer-events: none;
+        }
+
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+
+                opacity: 0.45;
+            }
+
+            50% {
+
+                opacity: 1;
+            }
+        }
+
+
+        /* -----------------------------
+           REVEAL
+        ----------------------------- */
+
+        .reveal {
+
+            position: absolute;
+
+            width: min(90%, 650px);
+
+            text-align: center;
+
+            opacity: 0;
+
+            transform:
+
+                translateY(45px)
+                scale(0.94);
+
+            pointer-events: none;
+
+            transition:
+
+                opacity 1s ease,
+
+                transform 1s
+                cubic-bezier(.2,.8,.2,1);
+        }
+
+
+        .reveal.show {
+
+            opacity: 1;
+
+            transform:
+
+                translateY(0)
+                scale(1);
+
+            pointer-events: auto;
+        }
+
+
+        /* -----------------------------
+           EYEBROW
+        ----------------------------- */
+
+        .eyebrow {
+
+            margin-bottom: 18px;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 5px;
+
+            color: #fff0c9;
+
+            text-transform: uppercase;
+        }
+
+
+        /* -----------------------------
+           TITLE
+        ----------------------------- */
+
+        .reveal h1 {
+
+            max-width: 650px;
+
+            margin:
+                0 auto 20px;
+
+            font-size:
+                clamp(30px, 6vw, 58px);
+
+            font-weight: normal;
+
+            letter-spacing: 2px;
+
+            line-height: 1.15;
+
+            color: #fff7f9;
+
+            text-shadow:
+
+                0 5px 25px
+                rgba(100, 35, 58, 0.25);
+        }
+
+
+        /* -----------------------------
+           DIVIDER
+        ----------------------------- */
+
+        .divider {
+
+            width: 55px;
+
+            height: 1px;
+
+            margin:
+                0 auto 25px;
+
+            background:
+                #f1d39a;
+        }
+
+
+        /* -----------------------------
+           TEXT
+        ----------------------------- */
+
+        .reveal p {
+
+            margin:
+                0 0 34px;
+
+            font-size: 19px;
+
+            line-height: 1.8;
+
+            color:
+                rgba(255, 246, 248, 0.88);
+        }
+
+
+        /* -----------------------------
+           BUTTON
+        ----------------------------- */
+
+        .airbnb-button {
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 220px;
+
+            padding:
+                16px 32px;
+
+            border-radius: 50px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #f5d49a,
+                    #d8a45f
+                );
+
+            color: #542b3a;
+
+            text-decoration: none;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            box-shadow:
+
+                0 15px 35px
+                rgba(100, 40, 60, 0.25);
+
+            transition:
+
+                transform 0.25s ease,
+
+                box-shadow 0.25s ease,
+
+                filter 0.25s ease;
+        }
+
+
+        .airbnb-button:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+
+                0 20px 45px
+                rgba(100, 40, 60, 0.30);
+
+            filter:
+                brightness(1.08);
+        }
+
+
+        /* -----------------------------
+           GIFT DISAPPEAR
+        ----------------------------- */
+
+        .gift.hidden {
+
+            opacity: 0;
+
+            transform:
+
+                scale(0.65)
+                translateY(-30px);
+
+            pointer-events: none;
+        }
+
+
+        /* -----------------------------
+           CONFETTI
+        ----------------------------- */
+
+        .confetti {
+
+            position: absolute;
+
+            width: 7px;
+            height: 13px;
+
+            top: -30px;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        .confetti.active {
+
+            animation:
+                fall 2.8s linear forwards;
+        }
+
+
+        @keyframes fall {
+
+            0% {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+            }
+
+            100% {
+
+                opacity: 0;
+
+                transform:
+                    translateY(110vh)
+                    rotate(720deg);
+            }
+        }
+
+
+        /* -----------------------------
+           MOBILE
+        ----------------------------- */
+
+        @media (max-width: 600px) {
+
+    .gift {
+        transform: scale(0.78);
+    }
+
+    .gift:hover {
+        transform: scale(0.80);
+    }
+
+    .hint {
+        bottom: 12%;
+        font-size: 11px;
+        letter-spacing: 3px;
+    }
+
+    .reveal {
+        width: 88%;
+    }
+
+    .reveal h1 {
+        letter-spacing: 1px;
+        font-size: clamp(29px, 8vw, 46px);
+    }
+
+    .reveal p {
+        font-size: 17px;
+    }
+
+}
+
+    </style>
+</head>
+
+
+<body>
+
+
+<div class="scene">
+
+
+    <div class="glow"></div>
+
+
+    <!-- GIFT -->
+
+    <div class="gift" id="gift">
+
+
+        <div class="box"></div>
+
+
+        <div class="ribbon-vertical"></div>
+
+
+        <div class="ribbon-horizontal"></div>
+
+
+        <div class="lid">
+
+            <div class="lid-ribbon"></div>
+
+        </div>
+
+
+        <div class="bow">
+
+            <div class="bow-left"></div>
+
+            <div class="bow-right"></div>
+
+            <div class="bow-center"></div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="hint" id="hint">
+
+        KLIKNI NA DARČEK
+
+    </div>
+
+
+    <!-- REVEAL -->
+
+    <div class="reveal" id="reveal">
+
+
+        <div class="eyebrow">
+
+            A LITTLE SURPRISE
+
+        </div>
+
+
+        <h1>
+
+           VŠETKO NAJLEPŠIE DIANKA!
+
+        </h1>
+
+
+        <div class="divider"></div>
+
+
+        <p>
+
+            Všetko najlepšie miláčik, Ľúbim Ťa! <br>
+            <strong>♡</strong>
+
+        </p>
+
+
+        <a
+            class="airbnb-button"
+            id="airbnbButton"
+            href="#"
+            target="_blank"
+            rel="noopener"
+        >
+
+            CLICK HERE
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    /* -----------------------------
+       AIRBNB LINK
+    ----------------------------- */
+
+    const AIRBNB_LINK =
+        "https://www.airbnb.com/l/ftRaoE6J?s=67&unique_share_id=4706c828-82fe-4db5-8135-8dfa9ee266c9";
+
+
+    const gift =
+        document.getElementById("gift");
+
+
+    const reveal =
+        document.getElementById("reveal");
+
+
+    const hint =
+        document.getElementById("hint");
+
+
+    const button =
+        document.getElementById("airbnbButton");
+
+
+    button.href =
+        AIRBNB_LINK;
+
+
+    /* -----------------------------
+       OPEN GIFT
+    ----------------------------- */
+
+    gift.addEventListener("click", () => {
+
+
+        const lid =
+            document.querySelector(".lid");
+
+
+        const bow =
+            document.querySelector(".bow");
+
+
+        /* hide instruction */
+
+        hint.classList.add("hidden");
+
+
+        /* open lid */
+
+        lid.style.transform =
+            "translateY(-105px) rotateX(-60deg) rotateZ(-5deg)";
+
+
+        /* move bow */
+
+        bow.style.transform =
+            "translateY(-75px) rotate(8deg)";
+
+
+        bow.style.opacity =
+            "0";
+
+
+        /* confetti */
+
+        createConfetti();
+
+
+        /* hide gift */
+
+        setTimeout(() => {
+
+            gift.classList.add("hidden");
+
+        }, 700);
+
+
+        /* show surprise */
+
+        setTimeout(() => {
+
+            reveal.classList.add("show");
+
+        }, 1100);
+
+
+    });
+
+
+    /* -----------------------------
+       CONFETTI
+    ----------------------------- */
+
+    function createConfetti() {
+
+
+        const colors = [
+
+            "#f5d49a",
+            "#f8d4df",
+            "#fff0f4",
+            "#d98da5",
+            "#e5b36e"
+
+        ];
+
+
+        for (
+            let i = 0;
+            i < 55;
+            i++
+        ) {
+
+
+            const piece =
+                document.createElement("div");
+
+
+            piece.className =
+                "confetti";
+
+
+            piece.style.left =
+                Math.random() * 100 + "%";
+
+
+            piece.style.top =
+                (Math.random() * 15 - 10) + "%";
+
+
+            piece.style.width =
+                (Math.random() * 5 + 5) + "px";
+
+
+            piece.style.height =
+                (Math.random() * 8 + 8) + "px";
+
+
+            piece.style.background =
+                colors[
+                    Math.floor(
+                        Math.random() * colors.length
+                    )
+                ];
+
+
+            piece.style.transform =
+                `rotate(${Math.random() * 360}deg)`;
+
+
+            piece.style.animationDelay =
+                Math.random() * 0.7 + "s";
+
+
+            document
+                .querySelector(".scene")
+                .appendChild(piece);
+
+
+            setTimeout(() => {
+
+                piece.classList.add("active");
+
+            }, 20);
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+</html>
